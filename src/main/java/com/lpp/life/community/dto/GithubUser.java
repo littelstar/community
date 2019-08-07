@@ -1,16 +1,16 @@
 package com.lpp.life.community.dto;
 
 public class GithubUser {
-    private String name;
+    private String login;
     private Long id;
     private String bio;
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public Long getId() {
@@ -32,7 +32,7 @@ public class GithubUser {
     @Override
     public String toString() {
         return "GithubUser{" +
-                "name='" + name + '\'' +
+                "login='" + login + '\'' +
                 ", id=" + id +
                 ", bio='" + bio + '\'' +
                 '}';
