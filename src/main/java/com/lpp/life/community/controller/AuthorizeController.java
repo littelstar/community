@@ -52,10 +52,11 @@ public class AuthorizeController {
             user.setGmtModefied(System.currentTimeMillis());
             userMapper.insertUser(user);
             request.getSession().setAttribute("user",githubUser);
-            return "redirect:index";
+//            重定向返回的是连接
+            return "redirect:/";
 
         }else {
-            return "redirect:index";
+            return "redirect:/";
         }
 
     }
