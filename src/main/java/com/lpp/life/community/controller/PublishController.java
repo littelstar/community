@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +30,8 @@ public class PublishController {
         question.setTitle(title);
         question.setDescription(description);
         question.setTags(tags);
-        question.setGmt_create(System.currentTimeMillis());
-        question.setGmt_modified(question.getGmt_create());
+        question.setGmtCreate(System.currentTimeMillis());
+        question.setGmtModified(question.getGmtCreate());
         User user = (User) request.getSession().getAttribute("user");
         question.setCreator(user.getId());
         questionMapper.insertQuestion(question);

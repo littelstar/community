@@ -21,7 +21,6 @@ public class AuthorizeController {
 
     @Autowired
     private GithubProvider githubProvider;
-
     @Value("${github.client.id}")
     private String clientId;
 
@@ -39,9 +38,9 @@ public class AuthorizeController {
                            HttpServletResponse response){
 
         AcessTokenDto acessTokenDto = new AcessTokenDto();
-        acessTokenDto.setClient_id(clientId);
-        acessTokenDto.setClient_secret(clientSecret);
-        acessTokenDto.setRedirect_uri(redirectUri);
+        acessTokenDto.setClientId(clientId);
+        acessTokenDto.setClientSecret(clientSecret);
+        acessTokenDto.setRedirectUri(redirectUri);
         acessTokenDto.setCode(code);
         acessTokenDto.setState(state);
         String accessToken = githubProvider.getAcessToken(acessTokenDto);
@@ -55,6 +54,7 @@ public class AuthorizeController {
             user.setLogin(githubUser.getLogin());
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModefied(System.currentTimeMillis());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             userMapper.insertUser(user);
 //            添加cookie
             response.addCookie(new Cookie("token",token));
