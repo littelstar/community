@@ -1,6 +1,8 @@
 package com.lpp.life.community.controller;
 
+import com.lpp.life.community.dto.PaginationDto;
 import com.lpp.life.community.dto.QuestionDto;
+import com.lpp.life.community.mapper.QuestionMapper;
 import com.lpp.life.community.mapper.UserMapper;
 import com.lpp.life.community.model.User;
 import com.lpp.life.community.service.QuestionService;
@@ -21,8 +23,12 @@ public class IndexController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private QuestionMapper questionMapper;
+
     @RequestMapping("/")
-    public String test(Model model, HttpServletRequest request){
+    public String test(Model model, HttpServletRequest request,@RequestParam(value = "page",defaultValue = "1",required = false) Integer page,
+                       @RequestParam(value = "size",defaultValue = "5",required = false) Integer size){
         Cookie[] cookies = request.getCookies();
         if(cookies!=null){
             for (Cookie cookie:cookies) {
@@ -34,9 +40,12 @@ public class IndexController {
                 }
             }
         }
-
-        ArrayList<QuestionDto> questionDtos = questionService.getQuestionDto();
-        model.addAttribute("questions",questionDtos);
+        ArrayList<QuestionDto> questionDto = questionService.getQuestionDto(page, size);
+        PaginationDto paginationDto = new PaginationDto();
+        Integer totalCount = questionMapper.getCount();
+        paginationDto.setPagination(totalCount,page,size);
+        paginationDto.setQuestionDtos(questionDto);
+        model.addAttribute("paginationDto",paginationDto);
         return "index";
     }
 }

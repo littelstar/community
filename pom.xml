@@ -74,7 +74,11 @@
 				<version>1.18.8</version>
 			</dependency>
 
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
 
 	</dependencies>
 
@@ -92,7 +96,7 @@
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/community?serverTimezone=UTC</url>
 					<user>root</user>
-					<password>1234</password>
+					<password>root</password>
 					<baselineOnMigrate>true</baselineOnMigrate>
 				</configuration>
 				<dependencies>
@@ -105,6 +109,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

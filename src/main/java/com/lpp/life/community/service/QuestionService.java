@@ -20,8 +20,9 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public ArrayList<QuestionDto> getQuestionDto(){
-        List<Question> questions = questionMapper.getQuestion();
+    public ArrayList<QuestionDto> getQuestionDto(Integer page,Integer size){
+        Integer offset=(page-1) * size;
+        List<Question> questions = questionMapper.getQuestion(offset,size);
         ArrayList<QuestionDto> questionDtos = new ArrayList<>();
         for (Question question : questions) {
             QuestionDto questionDto = new QuestionDto();
