@@ -34,4 +34,19 @@ public class QuestionService {
 
         return questionDtos;
     }
+
+    public ArrayList<QuestionDto>  getQuestionDtoByUserId(Integer userId, Integer page, Integer size) {
+        Integer offset=(page-1) * size;
+        List<Question> questions = questionMapper.getQuestionByUserId(userId,offset,size);
+        ArrayList<QuestionDto> questionDtos = new ArrayList<>();
+        for (Question question : questions) {
+            QuestionDto questionDto = new QuestionDto();
+            BeanUtils.copyProperties(question,questionDto);
+            User user = userMapper.fingById(question.getCreator());
+            questionDto.setUser(user);
+            questionDtos.add(questionDto);
+        }
+
+        return questionDtos;
+    }
 }
