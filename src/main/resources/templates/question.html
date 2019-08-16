@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>问题详情</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="js/jquery.min.js" type="application/javascript"></script>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{navigation :: header}"/>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                <br>
+                <hr>
+                <span th:text="${question.title}"></span>
+            </h3>
+            <div th:class="text-desc">
+            <span th:text="${question.tags}"></span>|作者
+            <span th:text="${question.user.login}"></span>|发布时间
+            <span th:text="${#dates.format(question.gmtCreate,'dd MM yyy')}"></span>|阅读数
+            <span th:text="${question.viewCount}"></span>
+            </div>
+
+            <div>
+                <span th:text="${question.description}"></span>
+            </div>
+            <div>
+                <hr>
+                <a th:href="@{'/questionEdit/'+${question.id}}"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>编辑</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="media"  style="margin-top: 30px">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-circle" src="https://avatars3.githubusercontent.com/u/43629765?v=4" th:src="${question.user.avatarUrl}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h3 class="media-heading">
+                        <span th:href="@{'/question/'+${question.id}}"  th:text="${question.user.login}"></span>
+                    </h3>
+                    <!--<span th:text="${question.commentCount}"> </span>个回复-->
+                    <!--<span th:text="${question.viewCount}"></span>个回复-->
+                    <!--<span th:text="${#dates.format(question.gmtCreate,'dd MM yyy')}"></span>-->
+
+                </div>
+            </div>
+            <h4>相关问题</h4>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+</body>
+</html>

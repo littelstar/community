@@ -4,7 +4,9 @@ import com.lpp.life.community.dto.PaginationDto;
 import com.lpp.life.community.dto.QuestionDto;
 import com.lpp.life.community.mapper.QuestionMapper;
 import com.lpp.life.community.mapper.UserMapper;
+import com.lpp.life.community.model.QuestionExample;
 import com.lpp.life.community.model.User;
+import com.lpp.life.community.model.UserExample;
 import com.lpp.life.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +45,8 @@ public class IndexController {
 //        User user = (User) request.getSession().getAttribute("user");
         ArrayList<QuestionDto> questionDto = questionService.getQuestionDto(page, size);
         PaginationDto paginationDto = new PaginationDto();
-        Integer totalCount = questionMapper.getCount();
+
+        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
         paginationDto.setPagination(totalCount,page,size);
         paginationDto.setQuestionDtos(questionDto);
         model.addAttribute("paginationDto",paginationDto);

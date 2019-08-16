@@ -3,6 +3,7 @@ package com.lpp.life.community.controller;
 import com.lpp.life.community.mapper.QuestionMapper;
 import com.lpp.life.community.model.Question;
 import com.lpp.life.community.model.User;
+import com.lpp.life.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class PublishController {
     @Autowired
-    private QuestionMapper questionMapper;
+    private QuestionService questionService;
     @GetMapping("/publish")
     public String publish(){
         return "publish";
@@ -25,16 +26,17 @@ public class PublishController {
     public String insertQuestion(@RequestParam(value = "title", required=false) String title,
                                  @RequestParam(value = "description",required=false) String description,
                                  @RequestParam(value = "tags" , required=false) String tags,
+                                 @RequestParam(value = "id",required = false) Integer id,
                                  HttpServletRequest request){
+
         Question question = new Question();
         question.setTitle(title);
         question.setDescription(description);
         question.setTags(tags);
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
+        question.setId(id);
         User user = (User) request.getSession().getAttribute("user");
         question.setCreator(user.getId());
-        questionMapper.insertQuestion(question);
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
 }

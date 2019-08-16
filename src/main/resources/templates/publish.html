@@ -3,30 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>码匠社区</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/community.css">
-    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/jquery.min.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: header}"/>
     <div class="container-fluid ma in" >
         <form action="/publish" method="post">
         <div class="row">
+            <input type="hidden" th:value="${question.id}" name="id" id="id">
             <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
                 <h3><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起</h3>
                 <hr>
                 <div class="form-group">
-                    <label for="title">问题描述</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="问题描述..." required>
+                    <label for="title">问题标题</label>
+                    <input type="text" class="form-control" id="title" name="title"
+                           placeholder="问题标题..." required th:value="${question.title}">
                 </div>
                 <div class="form-group">
-                    <label for="description">问题补充</label>
-                    <textarea name="description" id="description" class="form-control" rows="3" cols="10" placeholder="问题补充" required></textarea>
+                    <label for="description">问题描述</label>
+                    <textarea name="description" id="description" class="form-control"
+                              rows="3" cols="10" placeholder="问题补充" required th:text="${question.description}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tags">问题标签</label>
-                    <input type="text" name="tags" class="form-control" id="tags" placeholder="以逗号分隔" required>
+                    <input type="text" name="tags" class="form-control" id="tags" th:value="${question.tags}"
+                           placeholder="以逗号分隔" required>
                 </div>
                 <button type="submit" class="btn btn-sucess btn-publish">提交</button>
             </div>
