@@ -29,7 +29,10 @@ public class QuestionController {
     @GetMapping("/questionEdit/{id}")
     private String questionEdit(@PathVariable(value = "id" ) Integer id,Model model){
         QuestionDto questionById = questionService.getQuestionById(id);
-        model.addAttribute("question",questionById);
+        model.addAttribute("id",questionById.getId());
+        model.addAttribute("title",questionById.getTitle());
+        model.addAttribute("description",questionById.getDescription());
+        model.addAttribute("tags",questionById.getTags());
         return "publish";
     }
 }

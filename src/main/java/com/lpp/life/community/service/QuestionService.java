@@ -1,6 +1,8 @@
 package com.lpp.life.community.service;
 
 import com.lpp.life.community.dto.QuestionDto;
+import com.lpp.life.community.exception.CustomizeErrorCode;
+import com.lpp.life.community.exception.CustomizeException;
 import com.lpp.life.community.mapper.QuestionMapper;
 import com.lpp.life.community.mapper.UserMapper;
 import com.lpp.life.community.model.Question;
@@ -58,17 +60,23 @@ public class QuestionService {
     public QuestionDto getQuestionById(Integer id) {
         QuestionDto questionDto = new QuestionDto();
         Question question= questionMapper.selectByPrimaryKey(id);
+        if(question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
+        }
         BeanUtils.copyProperties(question,questionDto);
         return questionDto;
     }
     public void createOrUpdate(Question question) {
-        if(question.getId()==null){
+        if(question.getId() == null){
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             questionMapper.insert(question);
         }else{
             question.setGmtModified(System.currentTimeMillis());
-            questionMapper.updateByPrimaryKeySelective(question);
+            int updated = questionMapper.updateByPrimaryKeySelective(question);
+            if(updated!=1){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
+            }
         }
     }
 }

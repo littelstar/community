@@ -5,8 +5,6 @@ import com.lpp.life.community.dto.QuestionDto;
 import com.lpp.life.community.mapper.QuestionMapper;
 import com.lpp.life.community.mapper.UserMapper;
 import com.lpp.life.community.model.QuestionExample;
-import com.lpp.life.community.model.User;
-import com.lpp.life.community.model.UserExample;
 import com.lpp.life.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 

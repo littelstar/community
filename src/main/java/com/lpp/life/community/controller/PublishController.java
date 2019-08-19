@@ -1,6 +1,5 @@
 package com.lpp.life.community.controller;
 
-import com.lpp.life.community.mapper.QuestionMapper;
 import com.lpp.life.community.model.Question;
 import com.lpp.life.community.model.User;
 import com.lpp.life.community.service.QuestionService;
