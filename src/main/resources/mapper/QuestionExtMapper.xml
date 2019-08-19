@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lpp.life.community.mapper.QuestionExtMapper">
+
+    <update id="incView" parameterType="com.lpp.life.community.model.Question">
+        update question
+        set
+        view_count =VIEW_COUNT + #{viewCount,jdbcType=INTEGER}
+        where  id = #{id}
+    </update>
+</mapper>

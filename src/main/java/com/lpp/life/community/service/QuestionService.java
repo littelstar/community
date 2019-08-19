@@ -3,6 +3,7 @@ package com.lpp.life.community.service;
 import com.lpp.life.community.dto.QuestionDto;
 import com.lpp.life.community.exception.CustomizeErrorCode;
 import com.lpp.life.community.exception.CustomizeException;
+import com.lpp.life.community.mapper.QuestionExtMapper;
 import com.lpp.life.community.mapper.QuestionMapper;
 import com.lpp.life.community.mapper.UserMapper;
 import com.lpp.life.community.model.Question;
@@ -23,6 +24,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     public ArrayList<QuestionDto> getQuestionDto(Integer page,Integer size){
         Integer offset=(page-1) * size;
@@ -78,5 +82,13 @@ public class QuestionService {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
             }
         }
+    }
+
+    public void incView(Integer id) {
+        Question question = new Question();
+        question.setViewCount(1);
+        question.setId(id);
+
+        questionExtMapper.incView(question);
     }
 }

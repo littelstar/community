@@ -20,6 +20,8 @@ public class QuestionController {
     @GetMapping("/question/{id}")
     private String question(@PathVariable(value = "id") Integer id, Model model, HttpServletRequest request){
         QuestionDto questionById = questionService.getQuestionById(id);
+//        增加阅读数
+        questionService.incView(id);
         User user = (User)request.getSession().getAttribute("user");
         questionById.setUser(user);
         model.addAttribute("question",questionById);
