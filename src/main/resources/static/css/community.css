@@ -18,3 +18,10 @@ body{
     font-weight: normal;
     color: #999;
 }
+.comment{
+    margin: 10px 0px;
+}
+.btn-comment{
+    float: right;
+    margin-bottom: 10px;
+}

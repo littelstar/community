@@ -4,5 +4,6 @@ import com.lpp.life.community.model.Question;
 
 public interface QuestionExtMapper {
 
-     public void incView(Question question);
+     void incView(Question question);
+     void incComment(Question question);
 }

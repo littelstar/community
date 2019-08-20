@@ -3,8 +3,14 @@ package com.lpp.life.community.exception;
 public class CustomizeException extends  RuntimeException {
 
     private String message;
-    public CustomizeException(CustomizeErrorCode code){
-        this.message=code.getMessage();
+    private Integer code;
+    public CustomizeException(CustomizeErrorCode errorCode){
+        this.message = errorCode.getMessage();
+        this.code =errorCode.getCode();
+    }
+
+    public Integer getCode() {
+        return code;
     }
 
     @Override

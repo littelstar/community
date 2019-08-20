@@ -18,7 +18,7 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/question/{id}")
-    private String question(@PathVariable(value = "id") Integer id, Model model, HttpServletRequest request){
+    private String question(@PathVariable(value = "id") Long id, Model model, HttpServletRequest request){
         QuestionDto questionById = questionService.getQuestionById(id);
 //        增加阅读数
         questionService.incView(id);
@@ -29,7 +29,7 @@ public class QuestionController {
     }
 
     @GetMapping("/questionEdit/{id}")
-    private String questionEdit(@PathVariable(value = "id" ) Integer id,Model model){
+    private String questionEdit(@PathVariable(value = "id" ) Long id,Model model){
         QuestionDto questionById = questionService.getQuestionById(id);
         model.addAttribute("id",questionById.getId());
         model.addAttribute("title",questionById.getTitle());

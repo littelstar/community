@@ -25,7 +25,7 @@ public class PublishController {
     public String insertQuestion(@RequestParam(value = "title", required=false) String title,
                                  @RequestParam(value = "description",required=false) String description,
                                  @RequestParam(value = "tags" , required=false) String tags,
-                                 @RequestParam(value = "id",required = false) Integer id,
+                                 @RequestParam(value = "id",required = false) Long id,
                                  HttpServletRequest request){
 
         Question question = new Question();

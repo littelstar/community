@@ -1,0 +1,17 @@
+package com.lpp.life.community.enums;
+
+import com.lpp.life.community.model.Comment;
+
+public enum  CommentTypeEnum {
+    QUESTION(1),
+    COMMENT(2);
+    private Integer type;
+
+    public Integer getType() {
+        return type;
+    }
+
+    CommentTypeEnum(Integer type){
+        this.type=type;
+    }
+}

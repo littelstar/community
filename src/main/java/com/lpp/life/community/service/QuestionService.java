@@ -44,7 +44,7 @@ public class QuestionService {
         return questionDtos;
     }
 
-    public ArrayList<QuestionDto>  getQuestionDtoByUserId(Integer userId, Integer page, Integer size) {
+    public ArrayList<QuestionDto>  getQuestionDtoByUserId(Long userId, Integer page, Integer size) {
         Integer offset=(page-1) * size;
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(userId);
@@ -61,7 +61,7 @@ public class QuestionService {
         return questionDtos;
     }
 
-    public QuestionDto getQuestionById(Integer id) {
+    public QuestionDto getQuestionById(Long id) {
         QuestionDto questionDto = new QuestionDto();
         Question question= questionMapper.selectByPrimaryKey(id);
         if(question == null){
@@ -72,6 +72,9 @@ public class QuestionService {
     }
     public void createOrUpdate(Question question) {
         if(question.getId() == null){
+            question.setViewCount(0);
+            question.setLikeCount(0);
+            question.setCommentCount(0);
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             questionMapper.insert(question);
@@ -84,7 +87,7 @@ public class QuestionService {
         }
     }
 
-    public void incView(Integer id) {
+    public void incView(Long id) {
         Question question = new Question();
         question.setViewCount(1);
         question.setId(id);
