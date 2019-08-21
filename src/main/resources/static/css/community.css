@@ -25,3 +25,10 @@ body{
     float: right;
     margin-bottom: 10px;
 }
+.menu .icon:hover{
+    color: #2aabd2;
+}
+.menu .icon{
+    font-size: 19px;
+    color: #999999;
+}

@@ -34,12 +34,41 @@
                 <hr>
                 <a th:href="@{'/questionEdit/'+${question.id}}"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>编辑</a>
             </div>
+            <hr>
+            <h3><span>13个回复</span></h3>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <!--评论内容-->
+            <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12" th:each="comment:${comments}"
+                 style="margin-top: 10px;border-bottom: 1px solid #e6e6e6;margin-left: 20px;">
+                <div class="media"style="padding: 5px;">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded" src="https://avatars3.githubusercontent.com/u/43629765?v=4" >
+                        </a>
+                    </div>
+                    <div class="media-body ">
+                        <h4 class="media-heading">
+                            <span th:text="${comment.user.login}">回复人</span>
+                        </h4>
+                        <div th:text="${comment.content}" style="font-size: 16px;">
+                            我是回复的内容
+                        </div>
+                        <div  class="menu">
+                            <span class="glyphicon glyphicon-thumbs-up icon" ></span>
+                            <span class="glyphicon glyphicon-comment icon" ></span>
+                            <span th:text="${#dates.format(comment.gmtModified,'yyyy-MM-dd')}" class="pull-right icon"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <hr class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <!--评论Div-->
-            <div>
+            <div id="commentDiv" class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                 <div class="media"  style="margin-top: 30px">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-circle" src="https://avatars3.githubusercontent.com/u/43629765?v=4" th:src="${question.user.avatarUrl}">
+                            <img class="media-object img-rounded" src="https://avatars3.githubusercontent.com/u/43629765?v=4" th:src="${question.user.avatarUrl}">
                         </a>
                     </div>
                     <div class="media-body">
@@ -67,9 +96,6 @@
                     <h3 class="media-heading">
                         <span th:href="@{'/question/'+${question.id}}"  th:text="${question.user.login}"></span>
                     </h3>
-                    <!--<span th:text="${question.commentCount}"> </span>个回复-->
-                    <!--<span th:text="${question.viewCount}"></span>个回复-->
-                    <!--<span th:text="${#dates.format(question.gmtCreate,'dd MM yyy')}"></span>-->
 
                 </div>
             </div>

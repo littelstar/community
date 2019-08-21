@@ -1,7 +1,8 @@
 package com.lpp.life.community.controller;
 
+import com.lpp.life.community.dto.CommentDto;
 import com.lpp.life.community.dto.QuestionDto;
-import com.lpp.life.community.model.User;
+import com.lpp.life.community.service.CommentService;
 import com.lpp.life.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class QuestionController {
@@ -17,13 +19,17 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private CommentService commentService;
+
+
     @GetMapping("/question/{id}")
     private String question(@PathVariable(value = "id") Long id, Model model, HttpServletRequest request){
         QuestionDto questionById = questionService.getQuestionById(id);
 //        增加阅读数
         questionService.incView(id);
-        User user = (User)request.getSession().getAttribute("user");
-        questionById.setUser(user);
+        List<CommentDto> comments=commentService.listByQuestionId(questionById.getId());
+        model.addAttribute("comments",comments);
         model.addAttribute("question",questionById);
         return "question";
     }

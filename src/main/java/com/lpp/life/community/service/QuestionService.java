@@ -68,6 +68,8 @@ public class QuestionService {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
         }
         BeanUtils.copyProperties(question,questionDto);
+        User user = userMapper.selectByPrimaryKey(question.getCreator());
+        questionDto.setUser(user);
         return questionDto;
     }
     public void createOrUpdate(Question question) {

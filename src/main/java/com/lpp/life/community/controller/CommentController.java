@@ -1,9 +1,8 @@
 package com.lpp.life.community.controller;
 
-import com.lpp.life.community.dto.CommentDto;
+import com.lpp.life.community.dto.CommentCreateDto;
 import com.lpp.life.community.dto.ResultDto;
 import com.lpp.life.community.exception.CustomizeErrorCode;
-import com.lpp.life.community.mapper.CommentMapper;
 import com.lpp.life.community.model.Comment;
 import com.lpp.life.community.model.User;
 import com.lpp.life.community.service.CommentService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 
 @Controller
 public class CommentController {
@@ -25,19 +23,19 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value = "/comment",method =RequestMethod.POST)
-    public Object post(@RequestBody CommentDto commentDto, HttpServletRequest request){
+    public Object post(@RequestBody CommentCreateDto commentCreateDto, HttpServletRequest request){
 
         User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             return ResultDto.errorOf(CustomizeErrorCode.USER_NOT_LOGIN);
         }
         Comment comment = new Comment();
-        comment.setParentId(commentDto.getParentId());
-        comment.setContent(commentDto.getContent());
+        comment.setParentId(commentCreateDto.getParentId());
+        comment.setContent(commentCreateDto.getContent());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(comment.getGmtCreate());
         comment.setLikeCount(0l);
-        comment.setType(commentDto.getType());
+        comment.setType(commentCreateDto.getType());
         comment.setCommentatorId(user.getId());
         commentService.insert(comment);
 

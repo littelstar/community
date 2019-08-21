@@ -31,7 +31,8 @@ public class UserService {
             user.setGmtCreate(System.currentTimeMillis());
             userMapper.insert(user);
         }else{
-            userMapper.updateByPrimaryKey(user);
+            user.setToken(users.get(0).getToken());
+            userMapper.updateByPrimaryKey(users.get(0));
         }
         return user.getToken();
     }
