@@ -32,3 +32,6 @@ body{
     font-size: 19px;
     color: #999999;
 }
+.menu .active{
+    color: #2aabd2;
+}

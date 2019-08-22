@@ -2,6 +2,8 @@ package com.lpp.life.community.controller;
 
 import com.lpp.life.community.dto.CommentDto;
 import com.lpp.life.community.dto.QuestionDto;
+import com.lpp.life.community.enums.CommentTypeEnum;
+import com.lpp.life.community.model.Question;
 import com.lpp.life.community.service.CommentService;
 import com.lpp.life.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,13 @@ public class QuestionController {
         QuestionDto questionById = questionService.getQuestionById(id);
 //        增加阅读数
         questionService.incView(id);
-        List<CommentDto> comments=commentService.listByQuestionId(questionById.getId());
+//        获取评论
+        List<CommentDto> comments=commentService.listByQuestionId(questionById.getId(),CommentTypeEnum.QUESTION);
+//        获取相关问题
+        List<Question> questions = questionService.selectRelated(questionById);
         model.addAttribute("comments",comments);
         model.addAttribute("question",questionById);
+        model.addAttribute("relatedQuestions",questions);
         return "question";
     }
 

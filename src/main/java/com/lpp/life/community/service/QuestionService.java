@@ -30,7 +30,9 @@ public class QuestionService {
 
     public ArrayList<QuestionDto> getQuestionDto(Integer page,Integer size){
         Integer offset=(page-1) * size;
-        List<Question> questions= questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_create desc");
+        List<Question> questions= questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
 //        List<Question> questions = questionMapper.getQuestion(offset,size);
         ArrayList<QuestionDto> questionDtos = new ArrayList<>();
         for (Question question : questions) {
@@ -95,5 +97,14 @@ public class QuestionService {
         question.setId(id);
 
         questionExtMapper.incView(question);
+    }
+
+    public List<Question> selectRelated(QuestionDto questionDto){
+        Question question = new Question();
+        BeanUtils.copyProperties(questionDto,question);
+        String replace = question.getTags().replace(",", "|");
+        question.setTags(replace);
+        List<Question> questions = questionExtMapper.selectRelate(question);
+        return questions;
     }
 }

@@ -5,9 +5,10 @@ import com.lpp.life.community.exception.CustomizeException;
 import lombok.Data;
 
 @Data
-public class ResultDto {
+public class ResultDto <T>{
     private Integer code;
     private String message;
+    private T content;
     public static ResultDto errorOf(CustomizeErrorCode error){
         ResultDto resultDto = new ResultDto();
         resultDto.setCode(error.getCode());
@@ -28,5 +29,13 @@ public class ResultDto {
         resultDto.setCode(ex.getCode());
         resultDto.setMessage(ex.getMessage());
         return resultDto;
+    }
+
+    public static <T>ResultDto successOf(T t) {
+        ResultDto<Object> objectResultDto = new ResultDto<>();
+        objectResultDto.setCode(200);
+        objectResultDto.setMessage("请求成功");
+        objectResultDto.setContent(t);
+        return objectResultDto;
     }
 }
