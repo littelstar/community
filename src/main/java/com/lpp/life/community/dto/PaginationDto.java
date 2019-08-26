@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class PaginationDto {
+public class PaginationDto<T> {
 
 
-    private List<QuestionDto> questionDtos;
+    private List<T> data;
     private Boolean showPre;
     private Boolean showNext;
     private Boolean showEnd;

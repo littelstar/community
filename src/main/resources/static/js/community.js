@@ -113,3 +113,19 @@ function reply(e) {
     }
     
 }
+
+function showSelectTag() {
+    $("#select-tag").show();
+}
+
+function selectTag(e) {
+    var value = e.getAttribute("data-tag");
+    var previous = $("#tags").val();
+    if (previous.indexOf(value) == -1) {
+        if (previous) {
+            $("#tags").val(previous + ',' + value);
+        } else {
+            $("#tags").val(value);
+        }
+    }
+}

@@ -1,5 +1,6 @@
 package com.lpp.life.community.service;
 
+import com.lpp.life.community.dto.PaginationDto;
 import com.lpp.life.community.dto.QuestionDto;
 import com.lpp.life.community.exception.CustomizeErrorCode;
 import com.lpp.life.community.exception.CustomizeException;
@@ -46,7 +47,7 @@ public class QuestionService {
         return questionDtos;
     }
 
-    public ArrayList<QuestionDto>  getQuestionDtoByUserId(Long userId, Integer page, Integer size) {
+    public PaginationDto  getQuestionDtoByUserId(Long userId, Integer page, Integer size) {
         Integer offset=(page-1) * size;
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(userId);
@@ -60,7 +61,14 @@ public class QuestionService {
             questionDtos.add(questionDto);
         }
 
-        return questionDtos;
+        PaginationDto<QuestionDto> paginationDto = new PaginationDto();
+        QuestionExample questionExample2 = new QuestionExample();
+        questionExample.createCriteria().andCreatorEqualTo(userId);
+        Integer totalCount  = (int)questionMapper.countByExample(questionExample2);
+        paginationDto.setPagination(totalCount,page,size);
+        paginationDto.setData(questionDtos);
+
+        return paginationDto;
     }
 
     public QuestionDto getQuestionById(Long id) {

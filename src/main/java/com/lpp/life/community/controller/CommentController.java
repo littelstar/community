@@ -38,7 +38,7 @@ public class CommentController {
         comment.setType(commentCreateDto.getType());
         comment.setCommentatorId(user.getId());
         comment.setCommentCount(0);
-        commentService.insert(comment);
+        commentService.insert(comment,user);
         return ResultDto.successOf(CustomizeErrorCode.SUCCESS_COMMNET);
     }
 

@@ -45,7 +45,7 @@ public class IndexController {
 
         Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
         paginationDto.setPagination(totalCount,page,size);
-        paginationDto.setQuestionDtos(questionDto);
+        paginationDto.setData(questionDto);
         model.addAttribute("paginationDto",paginationDto);
         return "index";
     }

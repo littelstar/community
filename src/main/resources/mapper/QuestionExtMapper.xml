@@ -23,8 +23,8 @@
 
     <update id="incComment" parameterType="com.lpp.life.community.model.Question">
         update question
-
-        comment_count =comment_count + #{commentCount,jdbcType=INTEGER}
+        set
+        comment_count =COMMENT_COUNT + #{commentCount,jdbcType=INTEGER}
         where  id = #{id}
     </update>
 
