@@ -32,7 +32,8 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}">问题描述</h4>
+                    <h4 class="media-heading" >
+                        <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a></h4>
                     <span th:text="${question.commentCount}"> </span>个回复
                     <span th:text="${question.viewCount}"></span>个回复
                     <span th:text="${#dates.format(question.gmtCreate,'dd MM yyy')}"></span>
@@ -63,11 +64,18 @@
             <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                 <span th:text="${sectionName}"></span></h3>
             <hr>
-            <div class="media" th:each="notification:${profilepaginationDto.data}">
+            <div th:if="${profilepaginationDto} == null">
+                <h2>还未有通知消息！！！</h2>
+            </div>
+            <div th:if="${profilepaginationDto} != null">
+
+            <div class="media"  th:each="notification:${profilepaginationDto.data}">
                 <div class="media-body">
 
-                    <h5><a th:text="${notification.notifier.login}"></a><span th:text="${notification.type}"></span>
-                        <a th:href="'/notification/get/'+${notification.id}" th:text="${notification.outerTitle}"></a></h5>
+                    <h5><a th:text="${notification.notifier.login}"></a><span th:text="${notification.typeName}"></span>
+                        <a th:href="'/notification/get/'+${notification.id}" th:text="${notification.outerTitle}"></a>
+                        <span class="label label-danger" th:if="${notification.status} == 0">未读</span></h5>
+
 
                 </div>
             </div>
@@ -87,7 +95,7 @@
                     </li>
                 </ul>
             </nav>
-
+            </div>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="list-group">

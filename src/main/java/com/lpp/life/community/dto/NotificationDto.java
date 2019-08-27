@@ -13,4 +13,5 @@ public class NotificationDto {
     private String outerTitle;
     private String notifierTitle;
     private Integer type;
+    private String typeName;
 }

@@ -41,7 +41,8 @@ public class NotificationService {
         questionExample.createCriteria().andCreatorEqualTo(userId);
 
         NotificationExample notificationExample = new NotificationExample();
-        notificationExample.createCriteria().andReceiverEqualTo(userId).andStatusEqualTo(0);
+        notificationExample.createCriteria().andReceiverEqualTo(userId);
+        notificationExample.setOrderByClause("gmt_create desc");
         List<Notification> notifications = notificationMapper.selectByExampleWithRowbounds(notificationExample, new RowBounds(offset, size));
         if (notifications.size() == 0){
             return  null;
@@ -59,7 +60,8 @@ public class NotificationService {
             BeanUtils.copyProperties(notification,notificationDto);
             User user = userMapper.selectByPrimaryKey(userId);
             notificationDto.setNotifier(user);
-            notificationDto.setType(NotificationEnum.nameofType(notification.getType()));
+            notificationDto.setType(notification.getType());
+            notificationDto.setTypeName(NotificationEnum.nameofType(notification.getType()));
             notificationDtos.add(notificationDto);
         }
 
@@ -102,7 +104,8 @@ public class NotificationService {
 
         NotificationDto notificationDTO = new NotificationDto();
         BeanUtils.copyProperties(notification, notificationDTO);
-        notificationDTO.setType(NotificationEnum.nameofType(notification.getType()));
+        notificationDTO.setType(notification.getType());
+        notificationDTO.setTypeName(NotificationEnum.nameofType(notification.getType()));
         return notificationDTO;
     }
 }

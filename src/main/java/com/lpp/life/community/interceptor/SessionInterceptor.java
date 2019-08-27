@@ -1,6 +1,9 @@
 package com.lpp.life.community.interceptor;
 
+import com.lpp.life.community.mapper.NotificationMapper;
 import com.lpp.life.community.mapper.UserMapper;
+import com.lpp.life.community.model.Notification;
+import com.lpp.life.community.model.NotificationExample;
 import com.lpp.life.community.model.User;
 import com.lpp.life.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,9 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private NotificationMapper notificationMapper;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
@@ -34,6 +40,10 @@ public class SessionInterceptor implements HandlerInterceptor {
 //                User byToken = userMapper.findByToken(cookie.getValue());
                 if(users.size()!=0){
                     request.getSession().setAttribute("user",users.get(0));
+                    NotificationExample notificationExample = new NotificationExample();
+                    notificationExample.createCriteria().andStatusEqualTo(0).andReceiverEqualTo(users.get(0).getId());
+                    long unReadCount = notificationMapper.countByExample(notificationExample);
+                    request.getSession().setAttribute("unReadCount",unReadCount);
                 }else {
                     return false;
                 }
