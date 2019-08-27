@@ -26,7 +26,7 @@ public class NotificationController {
 //        得到信息
         NotificationDto notificationDto = notificationService.readStatus(id, user);
         if(notificationDto.getType() == NotificationEnum.REPLY_COMMENT.getType()|| notificationDto.getType() == NotificationEnum.REPLY_QUESTION.getType()){
-            return "redirect:/question/"+id;
+            return "redirect:/question/"+notificationDto.getOuterId();
         }
 //        标记已读
         return  "/";

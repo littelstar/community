@@ -6,11 +6,25 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/editormd.min.css">
     <script src="/js/jquery.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js"></script>
+    <script src="/js/lib/marked.min.js"></script>
+    <script src="/js/lib/prettify.min.js"></script>
 </head>
 <body>
+
+<script type="text/javascript">
+    $(function() {
+        var testView = editormd.markdownToHTML("test-markdown-view", {
+            // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
+            // htmlDecode : true,  // Enable / disable HTML tag encode.
+            // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+        });
+    });
+</script>
 <div th:insert="~{navigation :: header}"/>
 <div class="container-fluid main">
     <div class="row">
@@ -28,9 +42,9 @@
                 <span th:text="${question.viewCount}"></span>
             </div>
 
-            <div style="margin: 10px 0px">
+            <div style="margin: 10px 0px" id="test-markdown-view">
+                <textarea style="display:none;" th:text="${question.description}"></textarea>
 
-                <span th:text="${question.description}"></span>
             </div>
 
             <div>
