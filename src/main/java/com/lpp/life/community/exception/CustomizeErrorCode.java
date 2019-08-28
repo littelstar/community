@@ -9,7 +9,8 @@ public enum  CustomizeErrorCode implements ICustomizeErrorCode {
     TYPE_PARAM_WRONG(2006,"评论类型错误"),
     COMMENT_NOT_FOUNT(2007,"评论未找到"),
     NOTIFICATION_NOT_FOUND(2008,"通知信息不存在"),
-    READ_NOTIFICATION_FAILL(2009,"读取通知失败");
+    READ_NOTIFICATION_FAILL(2009,"读取通知失败"),
+    FILE_UPLOAD_FAILED(2010,"文件上传失败");
     private String message;
     private Integer code;
     CustomizeErrorCode(Integer code, String message){

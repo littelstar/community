@@ -26,26 +26,11 @@ public class IndexController {
     private QuestionMapper questionMapper;
 
     @RequestMapping("/")
-    public String test(Model model, HttpServletRequest request,@RequestParam(value = "page",defaultValue = "1",required = false) Integer page,
-                       @RequestParam(value = "size",defaultValue = "5",required = false) Integer size){
-//        Cookie[] cookies = request.getCookies();
-//        if(cookies!=null){
-//            for (Cookie cookie:cookies) {
-//                if(cookie.getName().equals("token")){
-//                    User byToken = userMapper.findByToken(cookie.getValue());
-//                    if(byToken!=null){
-//                        request.getSession().setAttribute("user",byToken);
-//                    }
-//                }
-//            }
-//        }
-//        User user = (User) request.getSession().getAttribute("user");
-        ArrayList<QuestionDto> questionDto = questionService.getQuestionDto(page, size);
-        PaginationDto paginationDto = new PaginationDto();
-
-        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
-        paginationDto.setPagination(totalCount,page,size);
-        paginationDto.setData(questionDto);
+    public String test(Model model, HttpServletRequest request,
+                       @RequestParam(value = "page",defaultValue = "1",required = false) Integer page,
+                       @RequestParam(value = "size",defaultValue = "5",required = false) Integer size,
+                       @RequestParam(value = "search",required = false) String search){
+        PaginationDto paginationDto = questionService.getQuestionDto(page, size,search);
         model.addAttribute("paginationDto",paginationDto);
         return "index";
     }

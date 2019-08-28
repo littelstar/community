@@ -2,6 +2,7 @@ package com.lpp.life.community.service;
 
 import com.lpp.life.community.dto.PaginationDto;
 import com.lpp.life.community.dto.QuestionDto;
+import com.lpp.life.community.dto.QuestionQueryDTO;
 import com.lpp.life.community.exception.CustomizeErrorCode;
 import com.lpp.life.community.exception.CustomizeException;
 import com.lpp.life.community.mapper.QuestionExtMapper;
@@ -10,13 +11,16 @@ import com.lpp.life.community.mapper.UserMapper;
 import com.lpp.life.community.model.Question;
 import com.lpp.life.community.model.QuestionExample;
 import com.lpp.life.community.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -29,12 +33,17 @@ public class QuestionService {
     @Autowired
     private QuestionExtMapper questionExtMapper;
 
-    public ArrayList<QuestionDto> getQuestionDto(Integer page,Integer size){
+    public PaginationDto getQuestionDto(Integer page,Integer size,String search){
         Integer offset=(page-1) * size;
-        QuestionExample example = new QuestionExample();
-        example.setOrderByClause("gmt_create desc");
-        List<Question> questions= questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
-//        List<Question> questions = questionMapper.getQuestion(offset,size);
+        if(StringUtils.isNotBlank(search)){
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setPage(offset);
+        questionQueryDTO.setSize(size);
+        questionQueryDTO.setSearch(search);
+        List<Question> questions= questionExtMapper.selectBySearch(questionQueryDTO);
         ArrayList<QuestionDto> questionDtos = new ArrayList<>();
         for (Question question : questions) {
             QuestionDto questionDto = new QuestionDto();
@@ -43,8 +52,12 @@ public class QuestionService {
             questionDto.setUser(user);
             questionDtos.add(questionDto);
         }
+        PaginationDto paginationDto = new PaginationDto();
+        Integer totalCount = questionExtMapper.selectCountBySearch(questionQueryDTO);
+        paginationDto.setPagination(totalCount,page,size);
+        paginationDto.setData(questionDtos);
 
-        return questionDtos;
+        return paginationDto;
     }
 
     public PaginationDto  getQuestionDtoByUserId(Long userId, Integer page, Integer size) {

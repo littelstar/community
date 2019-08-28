@@ -31,4 +31,30 @@
     <select id="selectRelate" parameterType="com.lpp.life.community.model.Question" resultType="com.lpp.life.community.model.Question">
         SELECT * from question WHERE tags REGEXP #{tags} and id!=#{id} limit 10
     </select>
+
+    <select id="selectBySearch" parameterType="com.lpp.life.community.dto.QuestionQueryDTO" resultType="com.lpp.life.community.model.Question">
+        SELECT * from question
+         <where>
+             <if test="search != null and search != ''">
+                 and title regexp #{search}
+             </if>
+             <if test="tags != null and tags!=''">
+                 and tags REGEXP #{tags}
+             </if>
+         </where>
+         limit #{page},#{size}
+    </select>
+
+    <select id="selectCountBySearch" parameterType="com.lpp.life.community.dto.QuestionQueryDTO" resultType="java.lang.Integer">
+        SELECT count(*) from question
+        <where>
+            <if test="search != null and search != ''">
+                and title regexp #{search}
+            </if>
+            <if test="tags != null and tags!=''">
+                and tags REGEXP #{search}
+            </if>
+        </where>
+        limit #{page},#{size}
+    </select>
 </mapper>
