@@ -5,6 +5,7 @@ import com.lpp.life.community.dto.GithubUser;
 import com.lpp.life.community.mapper.UserMapper;
 import com.lpp.life.community.provider.GithubProvider;
 import com.lpp.life.community.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
+@Slf4j
 public class AuthorizeController {
 
     @Autowired
@@ -58,6 +60,7 @@ public class AuthorizeController {
             return "redirect:/";
 
         }else {
+            log.error("callback get github error,{}",githubUser);
             return "redirect:/";
         }
 
