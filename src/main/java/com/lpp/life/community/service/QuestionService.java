@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +57,6 @@ public class QuestionService {
         Integer totalCount = questionExtMapper.selectCountBySearch(questionQueryDTO);
         paginationDto.setPagination(totalCount,page,size);
         paginationDto.setData(questionDtos);
-
         return paginationDto;
     }
 
